@@ -1,0 +1,15 @@
+# Virtual env
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Datasets
+datasets/raw_downloads/
+datasets/processed/
+datasets/raw_urls.csv
+
+# OS junk
+.DS_Store
+Thumbs.db
