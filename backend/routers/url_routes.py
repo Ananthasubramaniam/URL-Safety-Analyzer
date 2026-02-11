@@ -1,7 +1,11 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from analyzers.pattern_analyzer import PatternAnalyzer
 
 router = APIRouter()
+
+analyzer = PatternAnalyzer()
+
 
 # Request schema
 class UrlRequest(BaseModel):
@@ -12,18 +16,18 @@ class UrlRequest(BaseModel):
 class UrlResponse(BaseModel):
     score: int
     verdict: str
-    message: str
+    details: list[str]
 
 
 @router.post("/analyze-url", response_model=UrlResponse)
 def analyze_url(request: UrlRequest):
 
-    # MOCK LOGIC — real logic later
-    score = 45
+    result = analyzer.analyze(request.url)
+    score = result["score"]
 
-    if score < 30:
+    if score < 25:
         verdict = "Low Risk"
-    elif score < 70:
+    elif score < 60:
         verdict = "Medium Risk"
     else:
         verdict = "High Risk"
@@ -31,6 +35,5 @@ def analyze_url(request: UrlRequest):
     return {
         "score": score,
         "verdict": verdict,
-        "message": f"Analysis completed for {request.url}"
+        "details": result["details"]
     }
-    
