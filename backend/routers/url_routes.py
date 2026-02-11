@@ -1,38 +1,30 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-from analyzers.pattern_analyzer import PatternAnalyzer
+from analyzers.url_analyzer import URLAnalyzer
 
 router = APIRouter()
+analyzer = URLAnalyzer()
 
-analyzer = PatternAnalyzer()
 
-
-# Request schema
 class UrlRequest(BaseModel):
     url: str
 
-# Response schema
+
 class UrlResponse(BaseModel):
     score: int
     verdict: str
     details: list[str]
+    ml_probability: float | None = None
 
 
 @router.post("/analyze-url", response_model=UrlResponse)
 def analyze_url(request: UrlRequest):
 
     result = analyzer.analyze(request.url)
-    score = result["score"]
 
-    if score < 25:
-        verdict = "Low Risk"
-    elif score < 60:
-        verdict = "Medium Risk"
-    else:
-        verdict = "High Risk"
-
-    return {
-        "score": final_score,
-        "verdict": verdict,
-        "details": result["details"]
-    }
+    return UrlResponse(
+        score=result["score"],
+        verdict=result["verdict"],
+        details=result["details"],
+        ml_probability=result.get("ml_probability")
+    )
