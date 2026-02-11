@@ -2,7 +2,7 @@
 
 import joblib
 import os
-from utils.feature_extractor import extract_features
+from utils.feature_extractor import FeatureExtractor
 
 # Get model path
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -19,7 +19,7 @@ def ml_predict(url: str) -> dict:
 
     try:
         # Step 1: Convert URL to numeric features
-        features = extract_features(url)
+        features = FeatureExtractor(url)
 
         # Step 2: Model prediction
         probability = model.predict_proba([features])[0][1]
