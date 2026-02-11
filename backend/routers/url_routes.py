@@ -11,7 +11,6 @@ analyzer = PatternAnalyzer()
 class UrlRequest(BaseModel):
     url: str
 
-
 # Response schema
 class UrlResponse(BaseModel):
     score: int
@@ -33,7 +32,7 @@ def analyze_url(request: UrlRequest):
         verdict = "High Risk"
 
     return {
-        "score": score,
+        "score": final_score,
         "verdict": verdict,
         "details": result["details"]
     }
