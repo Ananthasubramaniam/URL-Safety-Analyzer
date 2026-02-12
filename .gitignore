@@ -28,3 +28,6 @@ datasets/
 # ---------- Logs ----------
 *.log
 logs/
+
+backend/threats.db
+*.db
