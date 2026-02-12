@@ -23,6 +23,8 @@ class URLAnalyzer:
         pattern_score = pattern_result.get("score", 0)
         network_score = network_result.get("score", 0)
         ml_score = ml_result.get("ml_score", 0)
+        print("ML RESULT:", ml_result)
+
 
         # Calculate final weighted score
         final_score = self.scoring_engine.calculate_score(
