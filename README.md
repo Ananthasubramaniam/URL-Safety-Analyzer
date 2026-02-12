@@ -74,6 +74,10 @@ Instead of relying on a single method, PhishGuard combines:
 - External threat intelligence integration
 - Secure ORM-based database logging
 - Clean and explainable scoring methodology
+- **Chrome Extension**: Real-time protection while browsing.
+- **Bulk Analysis**: Scan multiple URLs via file upload or CLI.
+- **Analytics Dashboard**: Visual insights into threat history.
+- **History Management**: Full control to clear scan data.
 
 ## 4. System Architecture
 
@@ -100,6 +104,11 @@ Frontend (React)
 
 **routers/**
 - url_routes.py
+- dashboard_routes.py
+- email_routes.py
+
+**scripts/**
+- bulk_analyze.py
 
 **Database:**
 - SQLAlchemy ORM
@@ -190,6 +199,16 @@ Frontend (React)
    ```
    Frontend will run at: http://localhost:5173
 
+### Chrome Extension Setup
+1. Open Chrome and navigate to `chrome://extensions/`.
+2. Enable **Developer mode** (top right).
+3. Click **Load unpacked** and select the `extension/` directory.
+4. The extension will now protect you in real-time!
+
+### Bulk Analysis Tool
+- **CLI**: Run `python backend/bulk_analyze.py urls.txt`
+- **Web**: Access the **Bulk Scan** tab in the dashboard.
+
 ## 7. Learnings & Challenges During the Hackathon
 
 Genuine Learnings and Challenges Faced During the Hackathon
@@ -208,21 +227,28 @@ Implementing machine learning algorithms was another significant challenge. Movi
 
 ## 9. Project Structure
 ```text
-PhishGuard/
-│
 ├── backend/
 │   ├── analyzers/
 │   ├── routers/
 │   ├── utils/
 │   ├── models/
 │   ├── main.py
+│   ├── bulk_analyze.py
 │   └── threats.db
 │
 ├── frontend/
 │   ├── src/
-│   ├── components/
-│   ├── pages/
+│   │   ├── components/
+│   │   ├── pages/
 │   └── package.json
+│
+├── extension/
+│   ├── manifest.json
+│   ├── background.js
+│   ├── content.js
+│   ├── popup.html
+│   ├── popup.js
+│   └── popup.css
 │
 ├── .env.example
 ├── requirements.txt
@@ -236,10 +262,7 @@ PhishGuard/
 - No hardcoded credentials
 
 ### Future Enhancements
-- Browser extension for real-time protection
-- Email attachment scanner
-- Bulk URL analysis
-- Threat intelligence dashboard
+- Email attachment scanner (Enhanced)
 - QR code safety checker
 - Advanced anomaly detection models
 
