@@ -200,9 +200,8 @@ Implementing machine learning algorithms was another significant challenge. Movi
 
 ### Key Learnings
 - Security tools must themselves follow strict security hygiene
-- Explainability improves user trust
 - Stability and structure matter more than feature count
-- Clean error handling is critical in production systems
+
 
 ## 8. Demo
 - **Demo Video:** (Add link here)
@@ -232,10 +231,9 @@ PhishGuard/
 ```
 
 ### Security Considerations
-- Parameterized ORM queries prevent SQL injection
+
 - API keys stored securely using environment variables
 - Sensitive files excluded via .gitignore
-- Graceful error handling implemented for external APIs
 - No hardcoded credentials
 
 ### Future Enhancements
