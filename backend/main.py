@@ -3,6 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from routers import url_routes
 
+from backend.database import engine, Base
+from backend.db_models.threat_log import ThreatLog
+
+Base.metadata.create_all(bind=engine)
+
+
 app = FastAPI(title="PhishGuard API")
 
 # Allow frontend to connect
