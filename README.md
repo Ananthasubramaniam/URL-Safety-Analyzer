@@ -1,110 +1,256 @@
-# URL Safety Analyzer
+# PhishGuard – URL Safety Analyzer
 
-## Overview
-URL Safety Analyzer is a professional-grade security tool designed to identify and mitigate phishing and malicious URL threats. The system provides automated, multi-dimensional analysis of web resources, delivering a structured risk assessment and actionable safety recommendations to protect users from credential harvesting, malware distribution, and social engineering attacks.
+**Team Name:** The Final Commit  
+**Team Members:**  
+Ananthasubramaniam  
+Arvind Srikanth  
+Deepak Kumar Patro  
 
-## Key Features
-- Pattern-based detection: Heuristic analysis of URL strings for suspicious indicators such as punycode, high entropy, and keyword abuse.
-- ML-based classification: Machine learning modeling of URL features to predict the probability of a phishing attempt.
-- Network validation: Real-time verification of DNS resolution, domain age via WHOIS data, and SSL certificate validity.
-- External API integration: Support for cross-referencing URLs against established threat intelligence blacklists.
-- Risk scoring engine: A weighted aggregation system that synthesizes multiple data points into a single normalized safety score.
-- Educational recommendations: Generation of deterministic, rule-based safety advice based on specific risk indicators.
-- Structured risk report: Comprehensive JSON-formatted output providing score, verdict, and detailed analysis breakdown.
+## 1. Problem Statement
+Phishing attacks remain one of the most widespread and damaging forms of cybercrime. Malicious URLs are often crafted to mimic legitimate websites, tricking users into revealing sensitive information such as login credentials, financial data, and personal identity details.
 
-## System Architecture
-The application is built on a decoupled full-stack architecture focusing on performance and modularity.
+These attacks lead to:
+- Financial fraud
+- Identity theft
+- Data breaches
+- Reputational damage
+- Enterprise-level security incidents
 
-- Frontend (React): A modern, responsive user interface built with Vite, providing a clean dashboard for inputting resources and visualizing structured risk reports.
-- Backend (FastAPI): A high-performance asynchronous API server that handles request orchestration, analysis execution, and asynchronous reporting.
-- Analyzers:
-  - PatternAnalyzer: Implements string-level heuristics and entropy calculations.
-  - ML Analyzer: Utilizes a pre-trained classification model for predictive threat modeling.
-  - NetworkChecker: Manages external network probes and validation logic.
-- Scoring Engine: A dedicated utility that handles the normalization and weighting of raw signals from different analysis modules.
-- Database (SQLAlchemy + SQLite): Provides persistent storage for scan history using an Object-Relational Mapper (ORM).
-- External APIs: Interfaces with third-party geolocation and threat intelligence providers.
+Traditional detection methods often rely solely on blacklist databases, which are reactive and may fail to detect newly registered malicious domains. Users also lack real-time awareness about why a URL is dangerous.
 
-## Detection Pipeline
-1. Input: User submits a URL via the frontend dashboard or API endpoint.
-2. Pattern analysis: The system evaluates the URL structure for common phishing tactics.
-3. ML probability scoring: Feature extraction is performed, and data is fed into the ML classifier.
-4. Network checks: The backend performs DNS, WHOIS, and SSL validation.
-5. External blacklist check: The URL is verified against known malicious repositories.
-6. Score aggregation: The Scoring Engine weights all signals to produce a final risk assessment.
-7. Risk report generation: A structured report containing the verdict, breakdown, and recommendations is compiled and returned.
+There is a need for an intelligent, explainable, and real-time URL analysis system that not only detects threats but also educates users.
 
-## Risk Scoring Methodology
-PhishGuard utilizes a weighted scoring system to ensure accuracy and explainability. Each analyzer (Pattern, ML, Network) contributes a partial score, which is then weighted according to its confidence level (e.g., Network safety typically holds higher weight for legitimacy verification). Critical indicators, such as a confirmed blacklist match, can override standard weights to ensure immediate isolation of high-risk threats.
+## 2. Our Solution
+PhishGuard – URL Safety Analyzer is a real-time phishing detection and awareness platform that evaluates URLs using a multi-layered detection pipeline.
 
-## Security Considerations
-- Parameterized ORM queries: All database interactions utilize SQLAlchemy to prevent SQL injection vulnerabilities.
-- Environment variable configuration: Sensitive configurations and API keys are managed via .env files, never hardcoded in the source.
-- Error handling strategy: The system implements an error-masking strategy, catching internal exceptions and returning graceful fallback responses to ensure no stack traces or sensitive system info is exposed to the client.
-- API isolation: External network calls are performed with strict timeouts to prevent resource exhaustion and ensure system stability.
+Instead of relying on a single method, PhishGuard combines:
+- Pattern-based heuristic analysis
+- Machine Learning classification
+- Network-level validation (WHOIS, SSL, DNS checks)
+- External threat intelligence APIs (e.g., VirusTotal, Google Safe Browsing)
+- Structured risk scoring engine
+- Educational safety recommendations
 
-## Environment Configuration
-The application uses environment variables to manage sensitive configuration and API keys.
+### Detection Approach
 
-1.  Copy the example environment file: `cp .env.example .env` (or manually copy in file explorer).
-2.  Open `.env` and provide your specific API keys:
-    -   `GOOGLE_SAFE_KEY`: Your Google Safe Browsing API key.
-    -   `DATABASE_URL`: Path to the SQLite database (default: `sqlite:///threats.db`).
+#### Pattern Analysis
+- Suspicious keywords detection
+- Excessive URL length
+- IP address usage instead of domain
+- Unusual symbols (e.g., '@')
+- Suspicious file extensions
+- Subdomain complexity
 
-Environment variables are used to ensure that secrets are not committed to version control. The `.env` file is explicitly ignored in `.gitignore` and must be managed locally.
+#### Machine Learning Classification
+- Extracted URL features are passed to a trained phishing detection model
+- Model outputs a probability score
+- Converted into a normalized risk contribution
 
-## Installation & Setup
+#### Network Validation
+- Domain age verification via WHOIS
+- SSL certificate validation
+- DNS-level validation
 
-### Backend
-1. Navigate to the backend directory.
-2. Create a virtual environment: `python -m venv venv`
-3. Activate the environment: `.\venv\Scripts\activate` (Windows) or `source venv/bin/activate` (Linux/Mac).
-4. Install dependencies: `pip install -r requirements.txt`
-5. Create a `.env` file from the provided template.
-6. Start the server: `python main.py`
+#### Threat Intelligence APIs
+- Integration with VirusTotal (if configured)
+- Google Safe Browsing blacklist checks
+- Real-time blacklist override for known malicious domains
+
+#### Risk Scoring Engine
+- Weighted aggregation of multiple signals
+- Normalized final score (0–100)
+- Clear verdict classification
+
+#### User Awareness Tips
+- Context-based recommendations
+- Explainable threat reasoning
+
+## 3. Core Features
+- Real-time URL scanning
+- Multi-layer risk classification (Safe / Suspicious / Phishing)
+- Detailed structured threat report
+- Score breakdown (Pattern, ML, Network, API)
+- Phishing awareness suggestions
+- External threat intelligence integration
+- Secure ORM-based database logging
+- Clean and explainable scoring methodology
+
+## 4. System Architecture
+
+### High-Level Flow
+Frontend (React)  
+→ FastAPI Backend  
+→ Pattern Analyzer  
+→ ML Analyzer  
+→ Network Analyzer  
+→ External API Checks  
+→ Scoring Engine  
+→ Structured Risk Report
+
+### Backend Components
+**analyzers/**
+- pattern_analyzer.py
+- ml_analyzer.py
+- network_analyzer.py
+- blacklist_analyzer.py
+
+**utils/**
+- scoring_engine.py
+- feature_extractor.py
+
+**routers/**
+- url_routes.py
+
+**Database:**
+- SQLAlchemy ORM
+- SQLite (threats.db)
+
+## 5. Tech Stack
 
 ### Frontend
-1. Navigate to the frontend directory.
-2. Install dependencies: `npm install`
-3. Start the development server: `npm run dev`
+- React (Vite)
+- JavaScript
+- HTML5
+- CSS3
 
-## API Endpoint
+### Backend
+- Python
+- FastAPI
+- Uvicorn
+- SQLAlchemy ORM
 
-POST /api/analyze-url
+### APIs
+- VirusTotal API
+- Google Safe Browsing API
 
-Example Request:
-```json
-{
-  "url": "http://suspicious-verification-update.com/login"
-}
+### Database
+- SQLite (local persistent storage)
+
+### Libraries & Tools
+- python-dotenv
+- joblib
+- scikit-learn
+- requests
+- whois
+
+## 6. How to Run the Project
+
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- pip
+- npm
+- VirusTotal API Key (optional but recommended)
+
+### Backend Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/PhishGuard.git
+   cd PhishGuard/backend
+   ```
+2. Create virtual environment:
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate   # Windows
+   # or
+   source venv/bin/activate   # macOS/Linux
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Create environment file:
+   ```bash
+   copy .env.example .env
+   ```
+5. Edit `.env` and add:
+   ```env
+   VIRUSTOTAL_API_KEY=your_api_key_here
+   GOOGLE_SAFE_KEY=your_api_key_here
+   DATABASE_URL=sqlite:///backend/threats.db
+   ```
+6. Run backend:
+   ```bash
+   uvicorn main:app --reload
+   ```
+   Backend will run at: http://127.0.0.1:8000
+
+### Frontend Setup
+1. Navigate to frontend directory:
+   ```bash
+   cd ../frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run frontend:
+   ```bash
+   npm run dev
+   ```
+   Frontend will run at: http://localhost:5173
+
+## 7. Learnings & Challenges During the Hackathon
+
+### Technical Challenges
+- Integrating multiple detection layers without overcomplicating architecture
+- Managing rebase conflicts and repository hygiene
+- Ensuring SQL injection prevention using ORM
+- Handling API rate limits and timeouts
+- Designing explainable scoring logic
+
+### Architectural Decisions
+- Chose FastAPI for performance and clean API structure
+- Used SQLAlchemy ORM to prevent SQL injection
+- Implemented modular analyzers for scalability
+- Designed weighted scoring engine for explainability
+
+### Key Learnings
+- Security tools must themselves follow strict security hygiene
+- Explainability improves user trust
+- Stability and structure matter more than feature count
+- Clean error handling is critical in production systems
+
+## 8. Demo
+- **Demo Video:** (Add link here)
+- **Live Deployment:** (Add hosted link if available)
+
+## 9. Project Structure
+```text
+PhishGuard/
+│
+├── backend/
+│   ├── analyzers/
+│   ├── routers/
+│   ├── utils/
+│   ├── models/
+│   ├── main.py
+│   └── threats.db
+│
+├── frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
+│   └── package.json
+│
+├── .env.example
+├── requirements.txt
+└── README.md
 ```
 
-Example Response:
-```json
-{
-  "score": 78,
-  "verdict": "Phishing / Unsafe",
-  "breakdown": {
-    "pattern": 35,
-    "ml": 18,
-    "network": 25
-  },
-  "reasons": [
-    "High digit density in URL",
-    "URL does not use HTTPS",
-    "WHOIS lookup failed or hidden"
-  ],
-  "recommendations": [
-    "Do not enter personal or financial information on this site.",
-    "A missing or invalid SSL certificate means the site is not securely encrypted.",
-    "Newly registered domains are frequently used in phishing attacks."
-  ],
-  "ml_probability": 0.62
-}
-```
+### Security Considerations
+- Parameterized ORM queries prevent SQL injection
+- API keys stored securely using environment variables
+- Sensitive files excluded via .gitignore
+- Graceful error handling implemented for external APIs
+- No hardcoded credentials
 
-## Future Enhancements
-- Integration with distributed threat intelligence networks.
-- Implementation of safe browser sandboxing for dynamic content analysis.
-- Expansion of the pattern-based detection library for zero-day threat variants.
-- Support for deep-packet inspection of network-level traffic signals.
+### Future Enhancements
+- Browser extension for real-time protection
+- Email attachment scanner
+- Bulk URL analysis
+- Threat intelligence dashboard
+- QR code safety checker
+- Advanced anomaly detection models
+
+PhishGuard demonstrates a layered, explainable, and scalable approach to phishing detection, combining traditional heuristics with machine learning and external intelligence sources to deliver real-time URL risk assessment.
