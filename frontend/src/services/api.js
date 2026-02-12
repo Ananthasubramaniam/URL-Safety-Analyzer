@@ -29,4 +29,14 @@ export const analyzeEmail = async (subject, body) => {
     }
 };
 
+export const getHistory = async () => {
+    try {
+        const response = await api.get('/history');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching history:', error);
+        throw error;
+    }
+};
+
 export default api;

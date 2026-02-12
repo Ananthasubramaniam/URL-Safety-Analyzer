@@ -20,10 +20,10 @@ class UrlRequest(BaseModel):
 class UrlResponse(BaseModel):
     score: int
     verdict: str
-    details: list[str]
+    breakdown: dict
+    reasons: list[str]
+    recommendations: list[str]
     ml_probability: Optional[float] = None
-    educational_tips: list[str] = []        # NEW
-    score_breakdown: dict | None = None     # NEW
 
 
 class HistoryItem(BaseModel):
@@ -40,30 +40,42 @@ class HistoryItem(BaseModel):
 
 @router.post("/analyze-url", response_model=UrlResponse)
 def analyze_url(request: UrlRequest):
-
-    result = analyzer.analyze(request.url)
-
-    db = SessionLocal()
     try:
-        log = ThreatLog(
-            url=request.url,
-            verdict=result["verdict"],
+        result = analyzer.analyze(request.url)
+
+        db = SessionLocal()
+        try:
+            log = ThreatLog(
+                url=request.url,
+                verdict=result["verdict"],
+                score=result["score"],
+                ml_probability=result.get("ml_probability")
+            )
+            db.add(log)
+            db.commit()
+        except Exception as db_exc:
+            print(f"Database logging failed: {db_exc}")
+        finally:
+            db.close()
+
+        return UrlResponse(
             score=result["score"],
+            verdict=result["verdict"],
+            breakdown=result["breakdown"],
+            reasons=result["reasons"],
+            recommendations=result["recommendations"],
             ml_probability=result.get("ml_probability")
         )
-        db.add(log)
-        db.commit()
-    finally:
-        db.close()
-
-    return UrlResponse(
-        score=result["score"],
-        verdict=result["verdict"],
-        details=result["details"],
-        ml_probability=result.get("ml_probability"),
-        educational_tips=result.get("educational_tips", []),   # NEW
-        score_breakdown=result.get("score_breakdown")           # NEW
-    )
+    except Exception as e:
+        # Graceful fallback to avoid returning stack trace
+        return UrlResponse(
+            score=0,
+            verdict="Error",
+            breakdown={"pattern": 0, "ml": 0, "network": 0},
+            reasons=[f"An error occurred during analysis: {str(e)}"],
+            recommendations=["Please try again later or contact support if the issue persists."],
+            ml_probability=0
+        )
 
 
 @router.get("/history", response_model=List[HistoryItem])

@@ -10,7 +10,6 @@ const Navbar = () => {
         { path: '/email', icon: Mail, label: 'Email' },
         { path: '/attachment', icon: FileText, label: 'Attachment' },
         { path: '/history', icon: History, label: 'History' },
-        { path: '/community', icon: Users, label: 'Community' },
     ];
 
     return (

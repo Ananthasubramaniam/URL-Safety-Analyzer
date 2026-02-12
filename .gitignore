@@ -1,35 +1,44 @@
-# ---------- Virtual Environment ----------
+# Virtual Environment
 .venv/
 venv/
+env/
+ENV/
 
-
-# ---------- Python Cache ----------
+# Python Cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Database
 *.db
-# ---------- Environment Files ----------
+*.sqlite3
+backend/threats.db
+
+# Environment Files
 .env
 .env.*
 
-# ---------- OS Junk ----------
+# OS Junk
 .DS_Store
 Thumbs.db
 
-# ---------- IDE ----------
+# IDEs
 .vscode/
 .idea/
 
-# ---------- DATASETS (IGNORE ENTIRE FOLDER) ----------
-datasets/
+# Node
+node_modules/
+dist/
+dist-ssr/
+build/
 
-
-
-# ---------- Logs ----------
+# Logs
 *.log
 logs/
+npm-debug.log*
 
+<<<<<<< HEAD
 backend/threats.db
 *.db
 
@@ -37,3 +46,7 @@ backend/threats.db
 .env
 .env.*
 !.env.example
+=======
+# Datasets
+datasets/
+>>>>>>> 88bcbf6 (readme, env and requirements)

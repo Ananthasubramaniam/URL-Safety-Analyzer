@@ -45,7 +45,7 @@ class NetworkChecker:
         try:
             ctx = ssl.create_default_context()
             with ctx.wrap_socket(socket.socket(), server_hostname=domain) as s:
-                s.settimeout(4.0)
+                s.settimeout(3.0) # Tightened timeout
                 s.connect((domain, 443))
                 cert = s.getpeercert()
 
@@ -63,7 +63,8 @@ class NetworkChecker:
             return {"detail": "IP geolocation unavailable."}
 
         try:
-            response = requests.get(f"http://ip-api.com/json/{ip}", timeout=3)
+            # Use a faster timeout for geolocation
+            response = requests.get(f"http://ip-api.com/json/{ip}", timeout=2)
             data = response.json()
             country = data.get("country", "Unknown")
             return {"detail": f"IP located in {country}."}
