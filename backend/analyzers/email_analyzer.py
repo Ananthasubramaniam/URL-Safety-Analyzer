@@ -22,10 +22,10 @@ class EmailAnalyzer:
     def analyze(self, subject: str, body: str):
         text = f"{subject} {body}"
 
-        # Transform to TF-IDF
+        
         features = self.vectorizer.transform([text])
 
-        # Probability of spam/phishing
+        
         prob = self.model.predict_proba(features)[0][1]
 
         verdict = "phishing" if prob > 0.6 else "safe"

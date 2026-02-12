@@ -21,10 +21,7 @@ MAX_RETRIES = 2
 RETRY_DELAY = 1.0  # seconds
 
 def clean_and_validate_urls(raw_urls):
-    """
-    Cleans and filters a list of URLs.
-    Removes duplicates, empty strings, and invalid schemes.
-    """
+    
     valid_urls = set()
     ignored_count = 0
     
@@ -33,14 +30,14 @@ def clean_and_validate_urls(raw_urls):
         if not url:
             continue
             
-        # Ignore non-http schemes
+       
         if url.startswith(("#", "javascript:", "mailto:", "ftp:")):
             ignored_count += 1
             continue
             
-        # Ensure scheme exists (default to http if missing but looks like domain)
+        
         if not url.startswith(("http://", "https://")):
-             # Simple heuristic: if it has a dot and no spaces, assume it's a domain
+            
              if "." in url and " " not in url:
                  url = "http://" + url
              else:
@@ -60,9 +57,7 @@ def clean_and_validate_urls(raw_urls):
     return list(valid_urls)
 
 def analyze_single_url(url):
-    """
-    Sends a single URL to the analysis API with retries.
-    """
+    
     payload = {"url": url}
     for attempt in range(MAX_RETRIES + 1):
         try:
@@ -99,7 +94,7 @@ def bulk_analyze(input_file, output_csv, output_json=None, batch_size=50, max_wo
     """
     Main function to process URLs in bulk.
     """
-    # 1. Read URLs
+   
     if not os.path.exists(input_file):
         logger.error(f"Input file not found: {input_file}")
         return
@@ -113,7 +108,7 @@ def bulk_analyze(input_file, output_csv, output_json=None, batch_size=50, max_wo
         logger.error("No valid URLs found to process.")
         return
 
-    # 2. Process Batch
+    
     results = []
     total = len(urls)
     processed = 0
@@ -122,7 +117,7 @@ def bulk_analyze(input_file, output_csv, output_json=None, batch_size=50, max_wo
     logger.info(f"Starting analysis of {total} URLs with {max_workers} threads...")
     
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # Submit all tasks
+       
         future_to_url = {executor.submit(analyze_single_url, url): url for url in urls}
         
         for future in as_completed(future_to_url):
@@ -133,15 +128,15 @@ def bulk_analyze(input_file, output_csv, output_json=None, batch_size=50, max_wo
             if data["risk_score"] == -1:
                 errors += 1
                 
-            # Log progress every 10 items
+            
             if processed % 10 == 0 or processed == total:
                 logger.info(f"Progress: {processed}/{total} ({processed/total*100:.1f}%) | Errors: {errors}")
 
-    # 3. Calculate Stats
+   
     valid_scores = [r["risk_score"] for r in results if r["risk_score"] >= 0]
     avg_score = sum(valid_scores) / len(valid_scores) if valid_scores else 0
     
-    # 4. Save CSV
+   
     logger.info(f"Saving results to {output_csv}...")
     try:
         with open(output_csv, "w", newline="", encoding="utf-8") as f:
@@ -151,7 +146,7 @@ def bulk_analyze(input_file, output_csv, output_json=None, batch_size=50, max_wo
     except Exception as e:
         logger.error(f"Failed to save CSV: {e}")
 
-    # 5. Save JSON (Optional)
+    
     if output_json:
         logger.info(f"Saving JSON results to {output_json}...")
         try:
@@ -178,7 +173,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     try:
-        # Verify API is up
+        
         try:
              requests.get("http://localhost:8000/docs", timeout=2)
         except:
