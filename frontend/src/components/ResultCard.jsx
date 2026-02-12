@@ -48,12 +48,20 @@ const ResultCard = ({ result }) => {
 
                 <ul className="details-list">
                     {details && details.length > 0 ? (
-                        details.map((detail, index) => (
-                            <li key={index} className="detail-item">
-                                <span className="detail-dot"></span>
-                                <span>{detail}</span>
-                            </li>
-                        ))
+                        details.map((detail, index) => {
+                            const isSkipped = detail.includes("skipped") || detail.includes("failed");
+                            const isDanger = detail.includes("found") || detail.includes("detected");
+
+                            return (
+                                <li key={index} className="detail-item">
+                                    <span className={`detail-dot ${isSkipped ? 'bg-warning' : isDanger ? 'bg-danger' : ''}`}
+                                        style={isSkipped ? { backgroundColor: 'var(--status-suspicious)' } :
+                                            isDanger ? { backgroundColor: 'var(--status-danger)' } : {}}>
+                                    </span>
+                                    <span style={isSkipped ? { color: 'var(--status-suspicious)' } : {}}>{detail}</span>
+                                </li>
+                            );
+                        })
                     ) : (
                         <li className="detail-item">No specific issues detected.</li>
                     )}

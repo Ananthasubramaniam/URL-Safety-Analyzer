@@ -7,6 +7,14 @@ load_dotenv()
 API_KEY = os.getenv("GOOGLE_SAFE_KEY")
 
 def check_blacklist(url: str):
+    if not API_KEY:
+        return {
+            "blacklisted": False,
+            "score": 0,
+            "status": "skipped",
+            "details": "Blacklist check skipped (Missing API Key)"
+        }
+
     endpoint = f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={API_KEY}"
 
     payload = {
@@ -29,17 +37,22 @@ def check_blacklist(url: str):
         if "matches" in data:
             return {
                 "blacklisted": True,
-                "score": 90
+                "score": 90,
+                "status": "unsafe",
+                "details": "URL found in Google Safe Browsing blacklist"
             }
 
         return {
             "blacklisted": False,
-            "score": 0
+            "score": 0,
+            "status": "safe",
+            "details": "URL not found in blacklists"
         }
 
     except Exception as e:
         return {
             "blacklisted": False,
             "score": 0,
-            "error": str(e)
+            "status": "error",
+            "details": f"Blacklist check failed: {str(e)}"
         }
