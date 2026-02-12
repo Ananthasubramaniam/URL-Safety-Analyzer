@@ -192,18 +192,11 @@ Frontend (React)
 
 ## 7. Learnings & Challenges During the Hackathon
 
-### Technical Challenges
-- Integrating multiple detection layers without overcomplicating architecture
-- Managing rebase conflicts and repository hygiene
-- Ensuring SQL injection prevention using ORM
-- Handling API rate limits and timeouts
-- Designing explainable scoring logic
+Genuine Learnings and Challenges Faced During the Hackathon
 
-### Architectural Decisions
-- Chose FastAPI for performance and clean API structure
-- Used SQLAlchemy ORM to prevent SQL injection
-- Implemented modular analyzers for scalability
-- Designed weighted scoring engine for explainability
+One of the main challenges we faced was collaborating using Git. Since this was our first hands-on experience working in a team environment with version control, the workflow initially felt difficult and unfamiliar. However, we applied what we had learned in the MLSD course, using Git commands to manage repositories, track changes, and coordinate our work effectively.
+
+Implementing machine learning algorithms was another significant challenge. Moving from theoretical understanding to practical implementation required deeper problem-solving and experimentation. Through this process, we learned how to apply models in real-time scenarios and gained a clearer understanding of their real-world use cases. The concepts and models we studied in our machine learning course proved to be especially helpful in guiding our approach.
 
 ### Key Learnings
 - Security tools must themselves follow strict security hygiene
