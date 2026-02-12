@@ -1,18 +1,14 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from analyzers.url_analyzer import URLAnalyzer
-
-
 from backend.database import SessionLocal
 from backend.db_models.threat_log import ThreatLog
 
 router = APIRouter()
 analyzer = URLAnalyzer()
-
-
 
 
 class UrlRequest(BaseModel):
@@ -23,7 +19,9 @@ class UrlResponse(BaseModel):
     score: int
     verdict: str
     details: list[str]
-    ml_probability: float | None = None
+    ml_probability: Optional[float] = None
+    educational_tips: list[str] = []        # NEW
+    score_breakdown: dict | None = None     # NEW
 
 
 class HistoryItem(BaseModel):
@@ -31,13 +29,11 @@ class HistoryItem(BaseModel):
     url: str
     verdict: str
     score: int
-    ml_probability: float | None
+    ml_probability: Optional[float]
     created_at: datetime
 
     class Config:
         orm_mode = True
-
-
 
 
 @router.post("/analyze-url", response_model=UrlResponse)
@@ -62,10 +58,10 @@ def analyze_url(request: UrlRequest):
         score=result["score"],
         verdict=result["verdict"],
         details=result["details"],
-        ml_probability=result.get("ml_probability")
+        ml_probability=result.get("ml_probability"),
+        educational_tips=result.get("educational_tips", []),   # NEW
+        score_breakdown=result.get("score_breakdown")           # NEW
     )
-
-
 
 
 @router.get("/history", response_model=List[HistoryItem])
