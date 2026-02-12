@@ -2,12 +2,13 @@
 .venv/
 venv/
 
+
 # ---------- Python Cache ----------
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
+*.db
 # ---------- Environment Files ----------
 .env
 .env.*

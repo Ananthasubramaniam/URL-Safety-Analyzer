@@ -4,8 +4,10 @@ from datetime import datetime
 from typing import List, Optional
 
 from analyzers.url_analyzer import URLAnalyzer
-from backend.database import SessionLocal
-from backend.db_models.threat_log import ThreatLog
+
+# NEW IMPORTS
+from database import SessionLocal
+from db_models.threat_log import ThreatLog
 
 router = APIRouter()
 analyzer = URLAnalyzer()

@@ -23,7 +23,6 @@ class EmailResponse(BaseModel):
 # -------- ROUTE --------
 @router.post("/analyze-email", response_model=EmailResponse)
 def analyze_email(request: EmailRequest):
-
     result = analyzer.analyze(
         subject=request.subject,
         body=request.body

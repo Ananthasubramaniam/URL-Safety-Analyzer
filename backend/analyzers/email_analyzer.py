@@ -1,6 +1,11 @@
 import os
 import joblib
 import numpy as np
+from sklearn.linear_model import LogisticRegression
+
+# Monkeypatch LogisticRegression to handle missing multi_class attribute from old pickles
+if not hasattr(LogisticRegression, 'multi_class'):
+    setattr(LogisticRegression, 'multi_class', 'auto')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(BASE_DIR, "models")

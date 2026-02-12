@@ -315,3 +315,93 @@
   font-size: 0.875rem;
   margin-top: auto;
 }
+
+/* EmailForm Styles */
+.email-form-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.email-form-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.email-icon-box {
+  background-color: rgba(37, 99, 235, 0.1);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  color: var(--accent-primary);
+}
+
+.email-input-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.email-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.email-input-field {
+  width: 100%;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem var(--spacing-md);
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.email-input-field:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  background-color: var(--bg-secondary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.email-textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.email-submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-xl);
+}
+
+.email-submit-btn {
+  background-color: var(--accent-primary);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: all 0.2s ease;
+}
+
+.email-submit-btn:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.email-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

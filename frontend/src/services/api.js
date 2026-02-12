@@ -19,4 +19,14 @@ export const analyzeUrl = async (url) => {
     }
 };
 
+export const analyzeEmail = async (subject, body) => {
+    try {
+        const response = await api.post('/analyze-email', { subject, body });
+        return response.data;
+    } catch (error) {
+        console.error('Error analyzing Email:', error);
+        throw error;
+    }
+};
+
 export default api;
