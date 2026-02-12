@@ -74,8 +74,8 @@ class URLAnalyzer:
         return {
             "score": final_score,
             "verdict": verdict,
-            "details": details,
-            "ml_probability": ml_result.get("ml_probability", None),
-            "score_breakdown": breakdown,
-            "educational_tips": educational_tips
+            "breakdown": breakdown,
+            "reasons": details,
+            "recommendations": educational_tips,
+            "ml_probability": ml_result.get("ml_probability", None)
         }

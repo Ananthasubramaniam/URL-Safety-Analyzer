@@ -1,0 +1,8 @@
+http://google.com
+http://phish-tank-simulation.com
+https://github.com
+http://malicious-example.com
+javascript:alert(1)
+http://localhost:8000
+www.microsoft.com
+broken-link

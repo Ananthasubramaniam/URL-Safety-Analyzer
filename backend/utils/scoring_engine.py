@@ -64,12 +64,16 @@ class ScoringEngine:
         ml_score,
         network_score,
         blacklist_score=0,
-        virustotal_score=0  
+        virustotal_score=0
+    ):
+        """
+        Returns the raw scores from each analyzer layer for detailed reporting.
+        """
         return {
-            "pattern_contribution": round(pattern_score * self.weights["pattern"]),
-            "ml_contribution": round(ml_score * self.weights["ml"]),
-            "network_contribution": round(network_score * self.weights["network"]),
-            "virustotal_contribution": round(virustotal_score * self.weights["virustotal"]),  
-            "blacklist_contribution": blacklist_score
+            "pattern": round(pattern_score),
+            "ml": round(ml_score),
+            "network": round(network_score),
+            "virustotal": round(virustotal_score),
+            "blacklist": round(blacklist_score)
         }
  

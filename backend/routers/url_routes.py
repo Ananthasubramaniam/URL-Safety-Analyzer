@@ -92,3 +92,41 @@ def get_history():
         return logs
     finally:
         db.close()
+
+
+@router.delete("/history")
+def clear_history():
+    db = SessionLocal()
+    try:
+        db.query(ThreatLog).delete()
+        db.commit()
+        return {"message": "History cleared"}
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        db.close()
+
+from concurrent.futures import ThreadPoolExecutor
+
+@router.post("/bulk-analyze")
+def bulk_analyze(request: List[str]):
+    results = []
+    
+    def analyze_single(url):
+        try:
+            return {
+                "url": url,
+                "result": analyzer.analyze(url)
+            }
+        except Exception as e:
+            return {
+                "url": url,
+                "error": str(e)
+            }
+
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        futures = [executor.submit(analyze_single, url) for url in request]
+        for future in futures:
+            results.append(future.result())
+    
+    return results

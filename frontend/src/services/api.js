@@ -39,4 +39,14 @@ export const getHistory = async () => {
     }
 };
 
+export const clearHistory = async () => {
+    try {
+        const response = await api.delete('/history');
+        return response.data;
+    } catch (error) {
+        console.error('Error clearing history:', error);
+        throw error;
+    }
+};
+
 export default api;

@@ -9,6 +9,7 @@ const Navbar = () => {
         { path: '/', icon: LinkIcon, label: 'URL' },
         { path: '/email', icon: Mail, label: 'Email' },
         { path: '/attachment', icon: FileText, label: 'Attachment' },
+        { path: '/bulk', icon: FileText, label: 'Bulk Scan' },
         { path: '/history', icon: History, label: 'History' },
     ];
 

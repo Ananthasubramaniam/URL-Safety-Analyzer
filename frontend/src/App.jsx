@@ -9,6 +9,8 @@ import CommunityPage from './pages/CommunityPage';
 import './App.css';
 import './index.css';
 
+import BulkAnalysisPage from './pages/BulkAnalysisPage';
+
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
             <Route path="/" element={<UrlPage />} />
             <Route path="/email" element={<EmailPage />} />
             <Route path="/attachment" element={<AttachmentPage />} />
+            <Route path="/bulk" element={<BulkAnalysisPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

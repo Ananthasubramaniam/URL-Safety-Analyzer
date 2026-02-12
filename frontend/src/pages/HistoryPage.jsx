@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { History, Shield, ShieldAlert, ShieldX, Clock, Loader2 } from 'lucide-react';
-import { getHistory } from '../services/api';
+import { getHistory, clearHistory } from '../services/api';
 
 const HistoryPage = () => {
     const [history, setHistory] = useState([]);
@@ -8,20 +8,31 @@ const HistoryPage = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchHistory = async () => {
-            try {
-                const data = await getHistory();
-                setHistory(data);
-            } catch (err) {
-                setError('Failed to load history items.');
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchHistory();
     }, []);
+
+    const fetchHistory = async () => {
+        try {
+            const data = await getHistory();
+            setHistory(data);
+        } catch (err) {
+            setError('Failed to load history items.');
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleClearHistory = async () => {
+        if (window.confirm("Are you sure you want to clear all scan history? This action cannot be undone.")) {
+            try {
+                await clearHistory();
+                setHistory([]);
+            } catch (err) {
+                alert("Failed to clear history");
+            }
+        }
+    };
 
     const getStatusInfo = (verdict) => {
         switch (verdict.toLowerCase()) {
@@ -66,9 +77,29 @@ const HistoryPage = () => {
                     <History size={64} />
                 </div>
                 <h1 className="page-title">Scan History</h1>
-                <p className="page-subtitle">
+                <p className="page-subtitle" style={{ marginBottom: 'var(--spacing-md)' }}>
                     Review your recent URL safety analyzes and track detected threats.
                 </p>
+                {history.length > 0 && (
+                    <button
+                        onClick={handleClearHistory}
+                        style={{
+                            padding: '8px 16px',
+                            background: 'var(--bg-secondary)',
+                            border: '1px solid var(--border-color)',
+                            borderRadius: '6px',
+                            color: 'var(--status-danger)',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                        }}
+                    >
+                        <ShieldX size={14} /> Clear All History
+                    </button>
+                )}
             </div>
 
             {error && (

@@ -96,7 +96,14 @@ const ResultCard = ({ result }) => {
                             {Object.entries(breakdown).map(([key, value]) => (
                                 <div key={key}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px', textTransform: 'capitalize' }}>
-                                        <span className="text-secondary">{key} Analysis</span>
+                                        <span className="text-secondary">
+                                            {key === 'virustotal' ? 'VirusTotal Analysis' :
+                                                key === 'ml' ? 'Machine Learning Analysis' :
+                                                    key === 'network' ? 'Network Validation' :
+                                                        key === 'pattern' ? 'Pattern Analysis' :
+                                                            key === 'blacklist' ? 'Blacklist' :
+                                                                `${key} Analysis`}
+                                        </span>
                                         <span className="font-bold">{value}%</span>
                                     </div>
                                     <div className="progress-bar-bg" style={{ height: '6px' }}>

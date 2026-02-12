@@ -1,0 +1,7 @@
+url,risk_score,label,error
+http://phish-tank-simulation.com,46,Suspicious,
+http://malicious-example.com,89,Phishing / Unsafe,
+https://github.com,5,Safe,
+http://google.com,98,Phishing / Unsafe,
+http://www.microsoft.com,92,Phishing / Unsafe,
+http://localhost:8000,84,Phishing / Unsafe,

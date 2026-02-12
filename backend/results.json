@@ -1,0 +1,38 @@
+[
+  {
+    "url": "http://phish-tank-simulation.com",
+    "risk_score": 46,
+    "label": "Suspicious",
+    "error": ""
+  },
+  {
+    "url": "http://malicious-example.com",
+    "risk_score": 89,
+    "label": "Phishing / Unsafe",
+    "error": ""
+  },
+  {
+    "url": "https://github.com",
+    "risk_score": 5,
+    "label": "Safe",
+    "error": ""
+  },
+  {
+    "url": "http://google.com",
+    "risk_score": 98,
+    "label": "Phishing / Unsafe",
+    "error": ""
+  },
+  {
+    "url": "http://www.microsoft.com",
+    "risk_score": 92,
+    "label": "Phishing / Unsafe",
+    "error": ""
+  },
+  {
+    "url": "http://localhost:8000",
+    "risk_score": 84,
+    "label": "Phishing / Unsafe",
+    "error": ""
+  }
+]
