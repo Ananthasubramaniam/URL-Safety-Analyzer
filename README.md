@@ -205,7 +205,6 @@ Implementing machine learning algorithms was another significant challenge. Movi
 
 ## 8. Demo
 - **Demo Video:** (Add link here)
-- **Live Deployment:** (Add hosted link if available)
 
 ## 9. Project Structure
 ```text
