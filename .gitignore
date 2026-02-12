@@ -1,17 +1,30 @@
-# Virtual env
+# ---------- Virtual Environment ----------
 .venv/
+venv/
 
-# Python cache
+# ---------- Python Cache ----------
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Datasets
-datasets/raw_downloads/
-datasets/processed/
-datasets/raw_urls.csv
+# ---------- Environment Files ----------
+.env
+.env.*
 
-# OS junk
+# ---------- OS Junk ----------
 .DS_Store
 Thumbs.db
 
-.envdd
+# ---------- IDE ----------
+.vscode/
+.idea/
+
+# ---------- DATASETS (IGNORE ENTIRE FOLDER) ----------
+datasets/
+
+
+
+# ---------- Logs ----------
+*.log
+logs/
