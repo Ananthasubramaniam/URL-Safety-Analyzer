@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 # Routers
 from routers import url_routes
 from routers import email_routes
+from routers import dashboard_routes
+
 
 # Database
 from database import engine, Base
@@ -31,6 +33,7 @@ app.add_middleware(
 # ---------- ROUTERS ----------
 app.include_router(url_routes.router, prefix="/api")
 app.include_router(email_routes.router, prefix="/api")
+app.include_router(dashboard_routes.router, prefix="/api")
 
 
 # ---------- ROOT ----------

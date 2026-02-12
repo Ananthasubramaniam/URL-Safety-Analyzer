@@ -72,3 +72,4 @@ class ScoringEngine:
             "virustotal_contribution": round(virustotal_score * self.weights["virustotal"]),  
             "blacklist_contribution": blacklist_score
         }
+ 
