@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Link as LinkIcon, Mail, FileText, History, Users } from 'lucide-react';
+import { Shield, Link as LinkIcon, Mail, FileText, History, Users, LayoutDashboard } from 'lucide-react';
 
 const Navbar = () => {
     const location = useLocation();
@@ -11,6 +11,7 @@ const Navbar = () => {
         { path: '/attachment', icon: FileText, label: 'Attachment' },
         { path: '/bulk', icon: FileText, label: 'Bulk Scan' },
         { path: '/history', icon: History, label: 'History' },
+        { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     ];
 
     return (

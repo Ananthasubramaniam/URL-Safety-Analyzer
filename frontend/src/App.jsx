@@ -11,6 +11,8 @@ import './index.css';
 
 import BulkAnalysisPage from './pages/BulkAnalysisPage';
 
+import DashboardPage from './pages/DashboardPage';
+
 function App() {
   return (
     <Router>
@@ -23,6 +25,7 @@ function App() {
             <Route path="/attachment" element={<AttachmentPage />} />
             <Route path="/bulk" element={<BulkAnalysisPage />} />
             <Route path="/history" element={<HistoryPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

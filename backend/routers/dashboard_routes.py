@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from sqlalchemy import func
-from backend.database import SessionLocal
-from backend.db_models.threat_log import ThreatLog
+from database import SessionLocal
+from db_models.threat_log import ThreatLog
 
 router = APIRouter()
 
